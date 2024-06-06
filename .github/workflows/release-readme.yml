@@ -29,6 +29,16 @@ jobs:
         git push origin "$TAG_NAME"
         echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
 
+    - name: Create README archive
+      run: |
+        tar -czf README.tar.gz README.md
+
+    - name: Upload README archive as artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: README-archive
+        path: README.tar.gz
+
     - name: Create GitHub release
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
