@@ -1,0 +1,34 @@
+name: Release README
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Create release notes
+      id: create_release
+      run: |
+        # Create a tag name based on the current timestamp
+        TAG_NAME="release-$(date +'%Y%m%d%H%M%S')"
+
+        # Create a release with the README.md file
+        gh release create "$TAG_NAME" README.md --title "Release $TAG_NAME" --notes "Automated release of README.md"
+
+    - name: Set up GitHub CLI
+      uses: actions/setup-gh-cli@v2
+
+    - name: Authenticate GitHub CLI
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+
+    - name: Create GitHub release
+      run: |
+        gh release create "$TAG_NAME" README.md --title "Release $TAG_NAME" --notes "Automated release of README.md"
+
