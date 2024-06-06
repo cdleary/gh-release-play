@@ -19,6 +19,9 @@ jobs:
         tar -xzf ghcli.tar.gz
         sudo mv gh_2.30.0_linux_amd64/bin/gh /usr/local/bin/
 
+    - name: Authenticate GitHub CLI
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+
     - name: Create release notes
       id: create_release
       run: |
@@ -28,10 +31,6 @@ jobs:
         # Create a release with the README.md file
         gh release create "$TAG_NAME" README.md --title "Release $TAG_NAME" --notes "Automated release of README.md"
 
-    - name: Authenticate GitHub CLI
-      run: echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
-
     - name: Create GitHub release
       run: |
         gh release create "$TAG_NAME" README.md --title "Release $TAG_NAME" --notes "Automated release of README.md"
-
