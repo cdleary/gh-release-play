@@ -34,5 +34,6 @@ jobs:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         TAG_NAME: ${{ env.TAG_NAME }}
       run: |
-        gh release create "$TAG_NAME" README.md --title "Release $TAG_NAME" --notes "Automated release of README.md" --token "$GH_TOKEN"
+        export GH_TOKEN=${{ secrets.GITHUB_TOKEN }}
+        gh release create "$TAG_NAME" README.md --title "Release $TAG_NAME" --notes "Automated release of README.md"
 
