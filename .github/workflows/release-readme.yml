@@ -39,6 +39,12 @@ jobs:
         name: README-archive
         path: README.tar.gz
 
+    - name: Upload README as artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: README
+        path: README.md
+
     - name: Create GitHub release
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
