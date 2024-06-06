@@ -22,11 +22,6 @@ jobs:
         tar -xzf ghcli.tar.gz
         sudo mv gh_2.30.0_linux_amd64/bin/gh /usr/local/bin/
 
-    - name: Authenticate GitHub CLI
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
-
     - name: Create and push a new tag
       run: |
         TAG_NAME="release-$(date +'%Y%m%d%H%M%S')"
@@ -39,5 +34,5 @@ jobs:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         TAG_NAME: ${{ env.TAG_NAME }}
       run: |
-        gh release create "$TAG_NAME" README.md --title "Release $TAG_NAME" --notes "Automated release of README.md"
+        gh release create "$TAG_NAME" README.md --title "Release $TAG_NAME" --notes "Automated release of README.md" --token "$GH_TOKEN"
 
